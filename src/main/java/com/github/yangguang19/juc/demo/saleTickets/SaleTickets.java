@@ -1,9 +1,7 @@
-package com.github.yangguang19.juc.saleTickets;
+package com.github.yangguang19.juc.demo.saleTickets;
 
 import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * @Description : TODO      模拟卖票员买票程序
@@ -31,7 +29,8 @@ class Ticket
         }catch (Exception e)
         {
             e.printStackTrace();
-        }finally {
+        }
+        finally {
             lock.unlock();
         }
     }
