@@ -1,4 +1,4 @@
-package com.github.yangguang19.juc.demo.saleTickets;
+package com.github.yangguang19.juc.lock.saleTickets;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
