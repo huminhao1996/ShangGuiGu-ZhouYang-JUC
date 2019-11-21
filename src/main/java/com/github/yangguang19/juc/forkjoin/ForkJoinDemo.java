@@ -15,7 +15,7 @@ public class ForkJoinDemo {
 
     static class ForkJoinTask extends RecursiveTask<Integer>
     {
-        private static int MIN_VALUE = 10;
+        private static final int MIN_VALUE = 10;
 
         private int result;
         private int begin;
@@ -29,7 +29,7 @@ public class ForkJoinDemo {
 
         @Override
         protected Integer compute() {
-            if(end - begin <= 10)
+            if(end - begin <= MIN_VALUE)
             {
                 for (int i = begin; i <= end; ++i)
                 {
