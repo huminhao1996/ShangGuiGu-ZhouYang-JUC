@@ -38,11 +38,13 @@ public class ForkJoinDemo {
             }
             else
             {
-                int middle = (begin + end) / 2;
+                int middle = (begin + end) >> 1;
+
                 ForkJoinTask forkJoinTask1 = new ForkJoinTask(begin,middle);
                 ForkJoinTask forkJoinTask2 = new ForkJoinTask(middle + 1,end);
                 forkJoinTask1.fork();
                 forkJoinTask2.fork();
+
                 result = forkJoinTask1.join() + forkJoinTask2.join();
             }
             return result;
