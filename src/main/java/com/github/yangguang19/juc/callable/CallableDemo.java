@@ -23,17 +23,25 @@ public class CallableDemo {
     public static void main(String[] args) throws Exception
     {
         Callable<String> call = ()->{
-            System.out.println("Hello Callable");
+            try
+            {
+                System.out.println("Hello Callable");
+                //等待3秒
+                Thread.sleep(3000);
+            }
+            catch(InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+
             return "Java";
         };
 
         //RunnableFuture接口实现了Runnable接口,代表它可以构造 Thread
         RunnableFuture<String> task = new FutureTask<>(call);
 
-
-
         new Thread(task,"A").start();
-
+        //如果在 FutureTask还没有计算出结果的时候就去get,那么会阻塞线程,直到线程结果返回
         System.out.println(task.get());
     }
 }

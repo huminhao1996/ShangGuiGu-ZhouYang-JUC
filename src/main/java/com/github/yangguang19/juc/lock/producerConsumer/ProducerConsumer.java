@@ -78,7 +78,7 @@ public class ProducerConsumer {
 
 
     /**
-     * 上面生产者和消费者使用JAVA API 层面的 Lock 实现
+     * 下面生产者和消费者使用JAVA API 层面的 Lock 实现
      */
     private Lock lock = new ReentrantLock();
 
