@@ -69,9 +69,28 @@
       创建工作线程的工厂,也就是如何创建线程的,一般采用默认的
 
 ##### handler:
-      拒绝策略. 如果线程池陷入一种极端情况:工作队列满了,无法再容纳新的任务,最大工作线程也到顶了,
-      此时线程池如何处理这种极端情况.(ThreadPoolExecutor 提供了四种策略)
-    
+      拒绝策略. 如果线程池陷入一种极端情况:工作队列满了,无法再容纳新的任务,最大工作线程也到达限制了,
+      此时线程池如何处理这种极端情况.
+      ThreadPoolExecutor 提供了四种策略:
+   ###### AbortPolicy(是线程池的默认拒绝策略): 
+         如果还有新任务到来,那么拒绝,并抛出RejectedExecutionException异常
+   ###### CallerRunsPolicy: 
+         这种策略不会拒绝执行新任务,但是由发出任务的线程执行,也就是说当线程池无法
+         执行新任务的时候,就由请求线程自己执行任务
+   ###### DiscardPolicy:
+          这种策略会拒绝新任务,但是不会抛出异常
+   ###### DiscardOldestPolicy:
+         这种策略不会拒绝策略,他会抛弃队列中等待最久那个任务,来执行新任务      
+ 
+##### 阿里巴巴开发者手册不建议开发者使用Executors创建线程池:
+      newFixedThreadPool和newSingleThreadExecutor:
+      会创建固定数量线程的线程池和单线程线程池,尽管二者线程池数量有限,
+      但是它会创建长度为Integer.MAX_VALUE长度的阻塞队列,这样可能会导致阻塞队列
+      的任务过多而导致OOM(OutOfMemoryError)
+      newCachedThreadPool和newScheduledThreadPool:
+      会创建缓存线程池和周期任务线程池,二者线程池的最大线程为Integer.MAX_VALUE,
+      也可能会导致OOM
+        
     
 #### Java内存模型:
      Java的内存模型实现总是线程从主存(共享内存)读取数据,线程可以把主存的变量存储到本地,
