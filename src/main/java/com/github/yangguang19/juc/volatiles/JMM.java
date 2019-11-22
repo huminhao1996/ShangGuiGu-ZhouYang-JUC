@@ -1,7 +1,7 @@
-package com.github.yangguang19.juc.jmm;
+package com.github.yangguang19.juc.volatiles;
 
 /**
- * @Description : TODO      JMM : Java Memory Model Java内存模型
+ * @Description : TODO      JMM : Java Memory Model Java内存模型(讲解Volatile的作用)
  * @Author :    yangguang
  * @Date :      2019/11/20
  */
