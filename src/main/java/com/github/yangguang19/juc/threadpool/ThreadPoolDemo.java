@@ -1,4 +1,4 @@
-package com.github.yangguang19.juc.threadpool.blockqueue;
+package com.github.yangguang19.juc.threadpool;
 
 import java.util.concurrent.*;
 
