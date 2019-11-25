@@ -20,7 +20,7 @@ public class Atomicity {
     private static final int threadCount = 15;
 
     //30个线程对number操作
-    private static final   CountDownLatch countDownLatch = new CountDownLatch(threadCount << 1);
+    private static final CountDownLatch countDownLatch = new CountDownLatch(threadCount << 1);
 
     public static void main(String[] args) throws Exception
     {
