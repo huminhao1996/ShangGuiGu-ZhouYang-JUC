@@ -1,5 +1,6 @@
 package com.github.yangguang19.jvm.jvmError;
 
+import java.lang.ref.Reference;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
