@@ -147,7 +147,7 @@
     
       对于共享式锁的实现,在AQS中对应tryAcquireShare获取锁和tryReleaseShare释放锁. 
 
-#####　AQS工作原理
+##### AQS工作原理
       上面说了,AQS内部有一个核心的volatile变量state代表着共享资源的状态.
       内置一个FIFO队列完成线程的获取和排队工作,FIFO由核心内部类Node组成,
       Node就是代表着队列中的线程,每个Node有包含它前置Node和后置Node的引用,
