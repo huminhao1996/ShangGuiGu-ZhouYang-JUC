@@ -19,6 +19,7 @@ class Ticket
 
     public void sale()
     {
+
         lock.lock();
         try
         {
