@@ -1,8 +1,11 @@
 package com.github.yangguang19.juc.collections;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Description : TODO      并发容器安全之List
@@ -12,7 +15,7 @@ import java.util.List;
 public class ListDemo {
     /**
      * ArrayList:
-     * 底层使用Object数组实现,初始化容量为10,动态扩容使用Arrays.copyof增长1.5倍,线程不安全
+     * 底层使用Object数组实现,初始化容量为10,动态扩容使用Arrays.copyof增长0.5倍 +１,线程不安全
      *
      * Vector:
      * 线程安全的ArrayList,底层方法使用synchronized保证线程安全,因此,效率低下,不建议使用
@@ -32,7 +35,8 @@ public class ListDemo {
      */
 
     //ArrayList线程不安全的demo
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception
+    {
         List<Integer> list = new ArrayList<>();
         Runnable run = ()->{
             list.add(5);
@@ -50,5 +54,8 @@ public class ListDemo {
          *
          * 此异常是同时对集合进行修改时会抛出的异常
          */
+
+
+
     }
 }
