@@ -29,7 +29,7 @@ public class FunctionalInterface {
         Consumer<String> consumer = System.out::println; //等同于 s -> {System.out.println(s);};
 
         //判断型接口接受参数,返回boolean类型值
-        Predicate<String> predicate = String::isBlank; //等同于 s -> {return s.isBlank();};
+//        Predicate<String> predicate = String::isBlank; //等同于 s -> {return s.isBlank();};
 
         //函数型接口,接受参数,返回值
         Function<Integer,Integer> function = n -> {return n * 3;};
@@ -39,7 +39,7 @@ public class FunctionalInterface {
 
 
         consumer.accept("a");
-        System.out.println(predicate.test("a"));
+//        System.out.println(predicate.test("a"));
         System.out.println(function.apply(5));
         System.out.println(supplier.get());
     }

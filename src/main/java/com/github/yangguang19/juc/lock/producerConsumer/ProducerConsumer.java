@@ -6,129 +6,75 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @Description : TODO       生产者和消费者
- * @Author :    yangguang
- * @Date :      2019/11/18
+ * 1.高内聚低耦合前提下,线程操作资源类
+ * 2.判断/操作/通知
+ * 3.多线程交互中,必须防止多线程的虚假唤醒,判断只能用while 不能用 if
  */
-
-
-
 public class ProducerConsumer {
-
-
-
     //资源
     private volatile int number = 0;
 
-
     //增加
-    public synchronized void increment()
-    {
+    public synchronized void increment() {
         try {
-            while(number > 0)
-            {
+            //1.判断
+            while (number > 0) {
                 this.wait();
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        //2.操作
         ++number;
 
         System.out.println(Thread.currentThread().getName() + " --> " + number);
-        //唤醒其他线程
+        //3.通知
         this.notifyAll();
     }
 
     //减少
-    public synchronized void decrement()
-    {
+    public synchronized void decrement() {
         try {
-            while (number <= 0)
-            {
+            //1.判断
+            while (number <= 0) {
                 this.wait();
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        //2.操作
         --number;
         System.out.println(Thread.currentThread().getName() + " --> " + number);
-        //唤醒其他线程
+        //3.通知
         this.notifyAll();
     }
 
-    public static void main(String[] args)
-    {
-        /**
-         * 模拟多个线程对number ++ 或--
-         * 多轮操作后,number依然为 0
-         */
+    public static void main(String[] args) {
+        //1.资源类
         ProducerConsumer producerConsumer = new ProducerConsumer();
-//        new Thread(()->{for (int i = 0 ; i < 10; ++i){producerConsumer.increment();}},"A").start();
-//        new Thread(()->{for (int i = 0 ; i < 10; ++i){producerConsumer.increment();}},"B").start();
-//        new Thread(()->{for (int i = 0 ; i < 10 ; ++i){producerConsumer.decrement();}},"C").start();
-//        new Thread(()->{for (int i = 0 ; i < 10 ; ++i){producerConsumer.decrement();}},"D").start();
-        new Thread(()->{for (int i = 0 ; i < 20; ++i){producerConsumer.increment2();}},"A").start();
-        new Thread(()->{for (int i = 0 ; i < 20; ++i){producerConsumer.increment2();}},"B").start();
-        new Thread(()->{for (int i = 0 ; i < 20 ; ++i){producerConsumer.decrement2();}},"C").start();
-        new Thread(()->{for (int i = 0 ; i < 20 ; ++i){producerConsumer.decrement2();}},"D").start();
-    }
-
-
-    /**
-     * 下面生产者和消费者使用JAVA API 层面的 Lock 实现
-     */
-    private Lock lock = new ReentrantLock();
-
-    private Condition condition = lock.newCondition();
-
-    public void increment2()
-    {
-
-        lock.lock();
-        try
-        {
-            while (number > 0)
-            {
-                condition.await();
+        //2.线程
+        new Thread(() -> {
+            for (int i = 0; i < 20; ++i) {
+                //3.线程操作资源类
+                producerConsumer.increment();
             }
-            ++number;
-            System.out.println(Thread.currentThread().getName() + " --> " + number);
-            condition.signalAll();
-        }
-        catch(InterruptedException e)
-        {
-            e.printStackTrace();
-        }
-        finally
-        {
-            lock.unlock();
-        }
+        }, "A").start();
+        new Thread(() -> {
+            for (int i = 0; i < 20; ++i) {
+                producerConsumer.increment();
+            }
+        }, "B").start();
+        new Thread(() -> {
+            for (int i = 0; i < 20; ++i) {
+                producerConsumer.decrement();
+            }
+        }, "C").start();
+        new Thread(() -> {
+            for (int i = 0; i < 20; ++i) {
+                producerConsumer.decrement();
+            }
+        }, "D").start();
     }
 
-    public void decrement2()
-    {
-        lock.lock();
-        try
-        {
-            while (number <= 0)
-            {
-                condition.await();
-            }
-            --number;
-            System.out.println(Thread.currentThread().getName() + " --> " + number);
-            condition.signalAll();
-        }
-        catch(InterruptedException e)
-        {
-            e.printStackTrace();
-        }
-        finally
-        {
-            lock.unlock();
-        }
-    }
 }
 
