@@ -58,22 +58,22 @@ public class ProducerConsumer {
                 //3.线程操作资源类
                 producerConsumer.increment();
             }
-        }, "A").start();
+        }, "A生产者").start();
         new Thread(() -> {
             for (int i = 0; i < 20; ++i) {
                 producerConsumer.increment();
             }
-        }, "B").start();
+        }, "B生产者").start();
         new Thread(() -> {
             for (int i = 0; i < 20; ++i) {
                 producerConsumer.decrement();
             }
-        }, "C").start();
+        }, "C消费者").start();
         new Thread(() -> {
             for (int i = 0; i < 20; ++i) {
                 producerConsumer.decrement();
             }
-        }, "D").start();
+        }, "D消费者").start();
     }
 
 }

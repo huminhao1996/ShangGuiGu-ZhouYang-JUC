@@ -5,33 +5,27 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @Description : TODO      模拟卖票员买票程序
- *                          多个卖票员同时卖30张票
+ * 多个卖票员同时卖30张票
  * @Author :    yangguang
  * @Date :      2019/11/18
  */
-class TicketByLock
-{
+class TicketByLock {
     //30张票
     private volatile int count = 30;
 
     //基于Java API层面的可重入锁
     private Lock lock = new ReentrantLock();
 
-    public void sale()
-    {
+    public void sale() {
 
         lock.lock();
-        try
-        {
-            if(count > 0)
-            {
+        try {
+            if (count > 0) {
                 System.out.println("当前线程: " + Thread.currentThread().getName() + " 卖出第 " + (count--) + " 张票,还剩: " + count);
             }
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             lock.unlock();
         }
     }
@@ -45,8 +39,23 @@ public class SaleTicketsLock {
     public static void main(String[] args) {
         // 1. 创建资源类
         TicketByLock ticket = new TicketByLock();
-        new Thread(()->{for (int i = 0 ;i < 40; ++i){ticket.sale();}},"A").start();
-        new Thread(()->{for (int i = 0 ;i < 40; ++i){ticket.sale();}},"B").start();
-        new Thread(()->{for (int i = 0 ;i < 40; ++i){ticket.sale();}},"C").start();
+        // 2. 创建线程
+        new Thread(() -> {
+            for (int i = 0; i < 40; ++i) {
+                ticket.sale();
+            }
+        }, "A").start();
+
+        new Thread(() -> {
+            for (int i = 0; i < 40; ++i) {
+                ticket.sale();
+            }
+        }, "B").start();
+
+        new Thread(() -> {
+            for (int i = 0; i < 40; ++i) {
+                ticket.sale();
+            }
+        }, "C").start();
     }
 }
