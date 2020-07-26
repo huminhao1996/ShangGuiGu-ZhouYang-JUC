@@ -4,29 +4,13 @@ import java.util.HashMap;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-/**
- * @Description : 读写锁
- * @Author :    yangguang
- * @Date :      2019/11/21
- */
-public class ReadWriteLockDemo {
-    /**
-     * * 读-读 : 无锁
-     * * 读-写　:　锁
-     * * 写－写　:　锁
-     */
-    //模拟缓存被读和被写
+public class ReadWriteLockUnsafeDemo {
+    // TODO: 2020/7/25  模拟多线程对公共资源类的读和写操作,没有加锁,不安全
     static class Cache {
-        private ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
-
         private HashMap<String, Object> cache = new HashMap<>();
 
         //写入缓存
         public void put(String key, Object val) {
-            /**
-             * 加写锁
-             */
-            readWriteLock.writeLock().lock();
             try {
                 System.out.println(Thread.currentThread().getName() + " 开始写入");
                 cache.put(key, val);
@@ -34,16 +18,11 @@ public class ReadWriteLockDemo {
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                readWriteLock.writeLock().unlock();
             }
         }
 
         //从缓存中读取数据
         public void get(String key) {
-            /**
-             * 加读锁
-             */
-            readWriteLock.readLock().lock();
             try {
                 System.out.println(Thread.currentThread().getName() + " 开始读取");
                 Object obj = cache.get(key);
@@ -51,7 +30,6 @@ public class ReadWriteLockDemo {
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                readWriteLock.readLock().unlock();
             }
         }
     }

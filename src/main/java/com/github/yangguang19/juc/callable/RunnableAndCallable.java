@@ -25,4 +25,18 @@ public class RunnableAndCallable {
             return 200;
         }
     }
+
+    public static void main(String[] args) {
+
+        // Runnable接口
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        });
+
+        //todo  没有 new Thread(new Callable())这种构造方法
+//        new Thread(new Callable<>());
+    }
 }
