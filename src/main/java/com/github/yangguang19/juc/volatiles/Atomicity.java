@@ -4,7 +4,7 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * @Description : TODO      测试volatile的原子性
+ * @Description : 炎症 volatile 不保证原子性
  * @Author :    yangguang
  * @Date :      2019/11/22
  */
@@ -12,7 +12,6 @@ public class Atomicity {
 
     //操作数
     private static volatile int number = 0;
-
 
     //CAS原子类测试
     private static AtomicInteger number2 = new AtomicInteger(0);

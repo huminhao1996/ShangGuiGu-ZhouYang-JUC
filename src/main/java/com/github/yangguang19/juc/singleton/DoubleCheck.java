@@ -1,9 +1,9 @@
-package com.github.yangguang19.juc.volatiles;
+package com.github.yangguang19.juc.singleton;
 
 import java.util.Objects;
 
 /**
- * @Description : TODO         双重检查:懒汉式单例模式
+ * @Description : 单例模式 - 双端检索机制
  * @Author :    yangguang
  * @Date :      2019/11/23
  */
@@ -17,7 +17,7 @@ public class DoubleCheck {
         {
             synchronized (DoubleCheck.class)
             {
-                if(Objects.isNull(doubleCheck))
+                if(doubleCheck == null)
                 {
                     doubleCheck = new DoubleCheck();
                 }
