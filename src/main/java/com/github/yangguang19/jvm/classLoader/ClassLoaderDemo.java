@@ -33,29 +33,24 @@ public class ClassLoaderDemo {
      */
 
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         Object object = new Object();
-        //因为Object是jdk的,所以由BootStrapClassLoader加载,而 BootStrapClassLoader 由 c++编写,这里打印null,代表 BootStrapClassLoader
+        /** 因为Object是jdk的,所以由BootStrapClassLoader加载,而 BootStrapClassLoader 由 c++编写,
+         * 这里打印null,代表 BootStrapClassLoader */
         System.out.println(object.getClass().getClassLoader());
-
-        //这里会抛出 NullPointException,因为BootStrapClassLoader已经是最顶级的类加载器了,不可能有parent了
+        /** 这里会抛出 NullPointException,因为BootStrapClassLoader已经是最顶级的类加载器了,不可能有parent了 */
 //        System.out.println(object.getClass().getClassLoader().getParent());
-
         System.out.println("----------------------");
 
         ClassLoaderDemo myObject = new ClassLoaderDemo();
 
-        //因为 ClassLoaderDemo 是我编写的属于此程序的类,所以由 AppClassLoader 加载
+        /** 因为 ClassLoaderDemo 是我编写的属于此程序的类,所以由 AppClassLoader 加载 */
         System.out.println(myObject.getClass().getClassLoader());
-
-        //获取 PlatformClassLoader
+        //获取 ExtensionClassLoader
         System.out.println(myObject.getClass().getClassLoader().getParent());
-
-        //获取 BootStrapClassLoader
+        //获取 BootStrapClassLoader 打印 null
         System.out.println(myObject.getClass().getClassLoader().getParent().getParent());
-
-        //空指针异常
-//        System.out.println(myObject.getClass().getClassLoader().getParent().getParent().getParent());
+        //空指针异常 没有比BootStrapClassLoader更早的类加载器了
+        System.out.println(myObject.getClass().getClassLoader().getParent().getParent().getParent());
     }
 }
